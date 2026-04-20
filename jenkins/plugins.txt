@@ -1,0 +1,11 @@
+# Jenkins plugins required for this pipeline
+# Install via: jenkins-plugin-cli --plugin-file plugins.txt
+
+git
+workflow-aggregator
+pipeline-stage-view
+docker-workflow
+ssh-agent
+credentials-binding
+blueocean
+terraform

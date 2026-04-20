@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blue-Green Deployment Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🚀 Blue-Green Deployment</h1>
+      <p class="subtitle">Zero-downtime deployment demo</p>
+    </header>
+
+    <main>
+      <div class="card">
+        <h2>API Status</h2>
+        <div id="status-badge" class="badge idle">Idle</div>
+
+        <button id="fetch-btn" onclick="fetchMessage()">
+          Call Backend API
+        </button>
+
+        <div id="response-box" class="response-box hidden">
+          <h3>Response</h3>
+          <pre id="response-content"></pre>
+        </div>
+
+        <div id="error-box" class="error-box hidden">
+          <p id="error-content"></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Health Check</h2>
+        <button id="health-btn" onclick="checkHealth()">
+          Check Backend Health
+        </button>
+        <div id="health-box" class="response-box hidden">
+          <pre id="health-content"></pre>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>Frontend served by Nginx · Backend: Node.js/Express</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
