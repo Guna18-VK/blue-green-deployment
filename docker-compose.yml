@@ -12,8 +12,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      args:
+        APP_VERSION: v1                 # baked into image at build time
     image: blue-green-backend:local
     container_name: backend
+    networks:
+      - app-network
     ports:
       - "5000:5000"
     environment:
@@ -34,6 +38,8 @@ services:
       dockerfile: Dockerfile
     image: blue-green-frontend:local
     container_name: frontend
+    networks:
+      - app-network              # same network → nginx can resolve "backend"
     ports:
       - "80:80"
     depends_on:
@@ -42,5 +48,6 @@ services:
     restart: unless-stopped
 
 networks:
-  default:
-    name: blue-green-network
+  app-network:
+    name: app-network
+    driver: bridge

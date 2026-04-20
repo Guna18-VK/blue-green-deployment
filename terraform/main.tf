@@ -28,6 +28,7 @@ module "networking" {
 
   project_name = var.project_name
   environment  = var.environment
+  aws_region   = var.aws_region
 }
 
 # ── EC2 instances (Blue + Green) ─────────────────────────────────────────────

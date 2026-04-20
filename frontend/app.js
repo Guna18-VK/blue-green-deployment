@@ -1,6 +1,9 @@
-// Backend URL — in production this is set via Nginx proxy (/api → backend)
-// In local dev, point directly to the backend container
-const API_BASE = window.BACKEND_URL || '';
+// Backend URL resolution:
+// - Opened as a file (file://)  → call backend directly on localhost:5000
+// - Served via Nginx (http/https) → use relative paths (Nginx proxies /api and /health)
+// - Override by setting window.BACKEND_URL before this script loads
+const API_BASE = window.BACKEND_URL ||
+  (location.protocol === 'file:' ? 'http://localhost:5000' : '');
 
 function setStatus(state) {
   const badge = document.getElementById('status-badge');

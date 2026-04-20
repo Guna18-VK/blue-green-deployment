@@ -10,7 +10,11 @@ const APP_VERSION = process.env.APP_VERSION || 'v1';
 const ENVIRONMENT = process.env.ENVIRONMENT || 'blue';
 
 // Middleware
-app.use(cors());
+// Allow requests from file:// (local dev), localhost, and any deployed origin
+app.use(cors({
+  origin: (origin, cb) => cb(null, true), // allow all origins in dev
+  methods: ['GET']
+}));
 app.use(express.json());
 app.use(morgan('combined')); // HTTP request logging
 

@@ -1,6 +1,9 @@
 # ── Stage 1: Install dependencies ──────────────────────────────────────────
 FROM node:20-alpine AS deps
 
+# Declare build arg so Jenkins --build-arg APP_VERSION=vN is accepted
+ARG APP_VERSION=v1
+
 WORKDIR /app
 
 # Copy only package files first to leverage Docker layer caching
@@ -9,6 +12,9 @@ RUN npm ci --only=production
 
 # ── Stage 2: Production image ───────────────────────────────────────────────
 FROM node:20-alpine
+
+# Re-declare ARG so it's available in this stage
+ARG APP_VERSION=v1
 
 WORKDIR /app
 
@@ -26,9 +32,10 @@ USER appuser
 
 EXPOSE 5000
 
-# Default env vars (overridden at runtime)
+# Bake APP_VERSION from build-arg into the image as an env var
+# Can still be overridden at runtime with docker run -e APP_VERSION=vN
 ENV PORT=5000 \
-    APP_VERSION=v1 \
+    APP_VERSION=${APP_VERSION} \
     ENVIRONMENT=blue
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \

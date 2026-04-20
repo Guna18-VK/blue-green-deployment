@@ -1,27 +1,5 @@
 # ── EC2 Instances: Blue and Green ────────────────────────────────────────────
 
-# User-data script template — installs Docker and starts the app containers
-locals {
-  user_data = <<-EOF
-    #!/bin/bash
-    set -e
-
-    # Install Docker
-    yum update -y
-    yum install -y docker
-    systemctl start docker
-    systemctl enable docker
-    usermod -aG docker ec2-user
-
-    # Install Docker Compose
-    curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 \
-      -o /usr/local/bin/docker-compose
-    chmod +x /usr/local/bin/docker-compose
-
-    echo "Docker installed successfully"
-  EOF
-}
-
 # ── Blue Instance ────────────────────────────────────────────────────────────
 resource "aws_instance" "blue" {
   ami                    = var.ami_id
