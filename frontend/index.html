@@ -14,19 +14,15 @@
     </header>
 
     <main>
+      <!-- ── API + Health cards ─────────────────────────────────────── -->
       <div class="card">
         <h2>API Status</h2>
         <div id="status-badge" class="badge idle">Idle</div>
-
-        <button id="fetch-btn" onclick="fetchMessage()">
-          Call Backend API
-        </button>
-
+        <button id="fetch-btn" onclick="fetchMessage()">Call Backend API</button>
         <div id="response-box" class="response-box hidden">
           <h3>Response</h3>
           <pre id="response-content"></pre>
         </div>
-
         <div id="error-box" class="error-box hidden">
           <p id="error-content"></p>
         </div>
@@ -34,13 +30,91 @@
 
       <div class="card">
         <h2>Health Check</h2>
-        <button id="health-btn" onclick="checkHealth()">
-          Check Backend Health
-        </button>
+        <button id="health-btn" onclick="checkHealth()">Check Backend Health</button>
         <div id="health-box" class="response-box hidden">
           <pre id="health-content"></pre>
         </div>
       </div>
+
+      <!-- ── CI/CD Pipeline Viewer ──────────────────────────────────── -->
+      <div class="card pipeline-card">
+        <h2>CI/CD Pipeline</h2>
+        <p class="pipeline-desc">Watch every stage of the Blue-Green pipeline execute in real time.</p>
+        <button id="pipeline-btn" onclick="runPipeline()">
+          ▶&nbsp; View CI/CD Pipeline
+        </button>
+
+        <!-- Pipeline panel (hidden until button clicked) -->
+        <div id="pipeline-panel" class="pipeline-panel hidden">
+
+          <!-- Top bar -->
+          <div class="pipeline-topbar">
+            <span id="pipeline-status-text">Initialising…</span>
+            <button class="close-btn" onclick="closePipeline()">✕</button>
+          </div>
+
+          <!-- Architecture diagram -->
+          <div class="arch-diagram">
+            <div class="arch-node" id="arch-github">
+              <span class="arch-icon">🐙</span>
+              <span>GitHub</span>
+            </div>
+            <div class="arch-arrow" id="arr-1">→</div>
+            <div class="arch-node" id="arch-jenkins">
+              <span class="arch-icon">🔧</span>
+              <span>Jenkins</span>
+            </div>
+            <div class="arch-arrow" id="arr-2">→</div>
+            <div class="arch-node" id="arch-docker">
+              <span class="arch-icon">🐳</span>
+              <span>DockerHub</span>
+            </div>
+            <div class="arch-arrow" id="arr-3">→</div>
+            <div class="arch-node" id="arch-ec2">
+              <span class="arch-icon">☁️</span>
+              <span>EC2</span>
+            </div>
+            <div class="arch-arrow" id="arr-4">→</div>
+            <div class="arch-node" id="arch-alb">
+              <span class="arch-icon">⚖️</span>
+              <span>ALB</span>
+            </div>
+          </div>
+
+          <!-- Stage list -->
+          <div class="stages-list" id="stages-list"></div>
+
+          <!-- Live log terminal -->
+          <div class="log-terminal">
+            <div class="log-header">
+              <span class="log-dot red"></span>
+              <span class="log-dot yellow"></span>
+              <span class="log-dot green"></span>
+              <span class="log-title">Pipeline Console Output</span>
+            </div>
+            <div class="log-body" id="log-body"></div>
+          </div>
+
+          <!-- Blue-Green environment status -->
+          <div class="env-status">
+            <div class="env-box" id="env-blue">
+              <div class="env-label">🔵 Blue</div>
+              <div class="env-version" id="blue-version">v1</div>
+              <div class="env-tag" id="blue-tag">LIVE</div>
+            </div>
+            <div class="env-switch">
+              <div class="switch-arrow" id="switch-arrow">⚖️ ALB</div>
+            </div>
+            <div class="env-box" id="env-green">
+              <div class="env-label">🟢 Green</div>
+              <div class="env-version" id="green-version">v2</div>
+              <div class="env-tag" id="green-tag">STANDBY</div>
+            </div>
+          </div>
+
+        </div><!-- /pipeline-panel -->
+      </div>
+
     </main>
 
     <footer>
@@ -49,5 +123,6 @@
   </div>
 
   <script src="app.js"></script>
+  <script src="pipeline.js"></script>
 </body>
 </html>

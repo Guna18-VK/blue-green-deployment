@@ -11,7 +11,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy static assets
-COPY index.html style.css app.js /usr/share/nginx/html/
+COPY index.html style.css app.js pipeline.js /usr/share/nginx/html/
 
 EXPOSE 80
 
